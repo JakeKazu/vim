@@ -1,3 +1,5 @@
 lightline.vim
 molokai
 neobundle.vim
+syntastic
+vim-rubocop

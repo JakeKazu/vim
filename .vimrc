@@ -15,8 +15,11 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " インストールしたいプラグインを記述
 NeoBundle 'tomasr/molokai'
 NeoBundle 'itchyny/lightline.vim'
-
+NeoBundle 'scrooloose/syntastic.git'
+NeoBundle 'ngmy/vim-rubocop'
+ 
 " NeoBundle設定の終了
+ 
 call neobundle#end()
  
 filetype plugin indent on
@@ -33,6 +36,24 @@ set t_Co=256
 
 "モードを見やすくlightline.vim
 set laststatus=2
+
+"文法チェックsyntastic
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=2
+let g:syntastic_mode_map = {'mode': 'passive'} 
+augroup AutoSyntastic
+	    autocmd!
+		    autocmd InsertLeave,TextChanged * call s:syntastic() 
+		augroup END
+		function! s:syntastic()
+			    w
+				    SyntasticCheck
+				endfunction
+
+"コード綺麗に RuboCop
+let g:syntastic_mode_map = { 'mode': 'active',
+            \ 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop','mri']
 
 """""""プラグインの設定　終わり""""""
 
@@ -54,7 +75,7 @@ set laststatus=2
 
 
 " 編集中のファイル名を表示する
-:set title
+" :set title
 
 " モードを表示する
 :set showmode
